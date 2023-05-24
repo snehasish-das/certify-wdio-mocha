@@ -1,0 +1,20 @@
+module.exports={
+    companyDropdown: "//div[@class='company-container']//descendant::div[@data-qa = 'dropDownControl']",
+    projectDropdown: "//div[@class='projects-container']//descendant::div[@data-qa = 'dropDownControl']",
+    companyMenu: "//div[@class='company-container']//div[@role='menu']//div[@role='menuitem' and @data-qa='<<param>>']",
+    projectMenu: "//div[@class='projects-container']//div[@role='menu']//div[@role='menuitem' and @data-qa='<<param>>']",
+    saveCancelButton: "//button[normalize-space()='<<param>>']",
+    createButton: "//a[normalize-space()='<<param>>']",
+    folderField: "//div[@class='label' and text()='<<param>>']/following::input",
+    actionButtonCheck: "//div[@class='actions-container']//div[contains(@class,'control')]//input",
+    actionButton: "//div[@class='actions-container']//div[contains(@class,'control')]",
+    actionInput: "//div[@class='label' and text()='Actions']//following::div[contains(@class, 'menu')]//div[text()='<<param>>']",
+    uploadButton: "//div[@class='files']//input",
+    fileCheckbox: "//div[@class='rt-td']//input[@type='checkbox' and contains(@id, '<<param>>')]",
+    folderSelection: "//div[@class='treebeard']//input",
+    folderInput: "//div[@class='tree-container']//div[text()='<<param>>']",
+    folderClick: "//div[@class='rt-td']//div[@class='folder-container']//div[contains(text(), '<<param>>')]",
+    breadcrumbsTitle: "//div[@class='breadcrumbs']//div[@class='title' and text()='<<param>>']",
+    breadcrumbsLink: "//div[@class = 'breadcrumbs']//div[@class='atitle' and text()='<<param>>']",
+    message: "//div[@class = 'success-message']"
+}

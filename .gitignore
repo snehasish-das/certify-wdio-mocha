@@ -1,0 +1,10 @@
+node_modules
+allure-report
+allure-results
+package-lock.json
+junitReports
+jsonResults
+.lambdatest
+*.log
+screenshots
+package.json

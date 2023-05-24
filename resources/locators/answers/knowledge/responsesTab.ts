@@ -1,0 +1,23 @@
+module.exports={
+    interfaceName : "//span[contains(text(),'<<param>>')]",
+    expandInterface : "//span[contains(text(),'<<param>>')]/parent::td/span[contains(@title,'Expand')]/*[name()='svg' and contains(@class,'pointerHand')]",
+    collapseInterfaceIcon : "//span[contains(text(),'<<param>>')]/preceding-sibling::span[contains(@title,'Collapse')]",
+    actions : "//span[contains(text(),'<<param>>')]/parent::td/following-sibling::td//span[contains(@title,'Actions')]/*[name()='svg']",
+    actions1 : "//span[contains(text(),'<<param>>')]/ancestor::td/following-sibling::td//span[contains(@title,'Actions')]/*[name()='svg']",
+    clickAction : "//span[contains(text(),'<<param>>')]",
+    newCategoryAction : "//span[contains(text(),'<<param>>')]/ancestor::td/following-sibling::td//*[name()='svg']",
+    editInterfaceInput : "//div[contains(text(),'<<param>>')]/following-sibling::div//input",
+    editInterfaceButton : "//span[contains(text(),'<<param>>')]/parent::button",
+    confirmInterfaceButton : "//button[contains(text(),'<<param>>')]",
+    categoryName : "//div[@id='commonDialogPlaceHolder']/following-sibling::div//input",
+    responseTitle : "//div[@id='responseTitleDiv']/textarea",
+    responseMenu : "//li[contains(text(),'<<param>>')]",
+    utteranceActions : "//span[contains(text(),'<<param>>')]/preceding-sibling::span//*[name()='svg']",
+    addUtteranceUserInput : "//input[contains(@placeholder,'What the user says')]",
+    generateButton : "//span[contains(text(),'GENERATE')]/parent::button",
+    botSeesDropdownIcon : "//span[contains(text(),'<<param>>')]/following-sibling::*[name()='svg']",
+    botSeesValue : "//div[contains(@data-qa,'{ <<param>> }')]",
+    saveUtterance : "//span[contains(@title,'Save')]/*[name()='svg']",
+    saveResponse : "//button[contains(text(),'SAVE')]",
+    closeResponse : "//button[contains(text(),'CLOSE')]"
+  }

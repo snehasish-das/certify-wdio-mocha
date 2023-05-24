@@ -1,0 +1,91 @@
+{
+    "fields": {
+        "project": {
+            "id": "23511"
+        },
+        "issuetype": {
+            "id": "1"
+        },
+        "summary": "",
+        "description": {
+            "version": 1,
+            "type": "doc",
+            "content": [
+                {
+                    "type": "paragraph",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        "customfield_20971": {
+            "type": "doc",
+            "version": 1,
+            "content": [
+                {
+                    "type": "paragraph",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "Automation testing usecase"
+                        }
+                    ]
+                }
+            ]
+        },
+        "priority": {
+            "id": "3",
+            "name": "P3 (Medium)",
+            "iconUrl": "https://247inc.atlassian.net/images/icons/priorities/medium.svg"
+        },
+        "assignee": {
+            "id": ""
+        },
+        "fixVersions": [
+            {
+                "id": "36526"
+            }
+        ],
+        "labels": [],
+        "customfield_20030": [
+            {
+                "id": "",
+                "value": ""
+            }
+        ],
+        "customfield_21074": [
+            {
+                "id": "36526"
+            }
+        ],
+        "customfield_21238": [],
+        "customfield_21237": [
+            {
+                "id": "29051",
+                "value": "N/A"
+            }
+        ],
+        "customfield_20632": [
+            {
+                "id": "29062",
+                "value": "N/A"
+            }
+        ],
+        "customfield_20384": [],
+        "customfield_21080": [],
+        "customfield_21235": {
+            "id": "29048",
+            "value": "No"
+        },
+        "customfield_21236": {
+            "id": "29050",
+            "value": "No"
+        },
+        "components": []
+    },
+    "update": {}
+}

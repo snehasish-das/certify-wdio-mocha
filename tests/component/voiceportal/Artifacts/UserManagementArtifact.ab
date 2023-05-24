@@ -1,0 +1,299 @@
+import homePage from '../../../../pages/home.page'
+import companyListPage from '../../../../pages/voiceportal/Admin/companyList.page';
+import voiceLandingPage from '../../../../pages/voiceportal/Home/voiceLanding.page';
+import serviceWebservicePage from '../../../../pages/voiceportal/Services/serviceWebservice.page';
+import adminProjectsPage from '../../../../pages/voiceportal/Admin/adminProjects.page';
+import usersPage from '../../../../pages/voiceportal/Admin/userManagement.page';
+
+const locators = require('../../../../resources/locators/voiceportal/Admin/userManagementPage');
+const locatorsWeb = require('../../../../resources/locators/voiceportal/Services/serviceWebservicePage')
+
+const env = require('../../../../config/environment');
+const users = require('../../../../config/users');
+
+describe('Voice Portal Admin -> User Management Artifact Creation', async() => {
+    before('Login', async() =>{
+        await homePage.navigateTo(env.voice_home);
+        await homePage.login(users.okta_voice.username,users.okta_voice.password,users.okta_voice.securityAnswer);
+        await homePage.waitFor(5000);
+    });
+    
+    it('Navigate to admin >> company', async() =>{
+        await voiceLandingPage.clickMenu("Admin");
+        await homePage.waitFor(5000);
+        await voiceLandingPage.clickTab("Company");
+        await homePage.waitFor(5000);
+    });
+
+    it('Fill initial company form', async() => {
+        await companyListPage.verifyAddNewCompanylink("Add New Company");
+        await homePage.waitFor(5000);
+        await companyListPage.nameInput("TVP_Automation","Name*");
+        await companyListPage.nameInput("test","Header*");
+        await companyListPage.nameInput("test@247.ai","Email*");
+    })
+
+    it('Add details of first contract', async() => {
+        await companyListPage.nameInput("sample11","Contract Name*");
+        await companyListPage.descriptionAndOutboundPort("Sample Description", "Description");
+        await homePage.waitFor(2000);
+        await companyListPage.verifyDropdownSelectAll("Inbound VXML:","SELECT ALL");
+        await companyListPage.clickSomewhere("Name*");
+        await companyListPage.verifyDropdownSelectAll("Outbound Web:", "SELECT ALL");
+        await companyListPage.clickSomewhere("Name*");
+        await companyListPage.verifyDropdownSelectAll("Call Control:","SELECT ALL");
+        await companyListPage.clickSomewhere("Name*");
+        await companyListPage.nameInput("test","Contract Identifier*");
+        await companyListPage.descriptionAndOutboundPort("10", "Outbound Web Max Ports*");
+        await companyListPage.verifyDropdown("Speech Recognition","Web Services");
+        await companyListPage.verifyDropdown("Text to Speech","Web Services");
+        await companyListPage.verifyDropdown("Large Grammar","Web Services");
+        await companyListPage.verifyDropdown("Audio Synthesis","Web Services");
+        await companyListPage.verifyDropdown("Audio Transcoding","Web Services");
+        await companyListPage.verifyDropdown("Audio Buffering","Web Services");
+        await companyListPage.clickSomewhere("Name*");
+        await companyListPage.verifyDropdown("Enabled per TFN","Caller Verification");
+        await companyListPage.verifyDropdown("NextCaller","Vendor ID");
+        await homePage.waitFor(3000);
+        await companyListPage.verifyDropdownSelectAll("Country List for Outbound IVR Dialing*","SELECT ALL");
+        await companyListPage.clickSomewhere("Name*");
+        await companyListPage.nameInput("test@247.ai","Invoice Reviewers (E-mail)*");
+        await homePage.waitFor(1000);
+    })
+
+    it('Click all checkboxes and save the company', async() => {
+        await companyListPage.clickCheckbox("Call Detail Records");
+        await companyListPage.clickCheckbox("Call Search");
+        await companyListPage.clickCheckbox("Whole Call Recording");
+        await companyListPage.clickCheckbox("Custom Reports");
+        await companyListPage.clickCheckbox("Client level");
+        await companyListPage.clickCheckbox("Offline Reports");
+        await companyListPage.clickCheckbox("Near Real-Time Summary");
+        await companyListPage.clickCheckbox("Experience Manager Access");
+        await companyListPage.clickCheckbox("Repository Access");
+        await companyListPage.clickCheckbox("Speaker Verification Access");
+        await companyListPage.verifyButton("Save");
+        await homePage.waitFor(10000);
+    })
+
+    it('Add another contract ', async() =>{
+        await companyListPage.clickRow();
+        await homePage.waitFor(5000);
+        await companyListPage.verifyCompanyHyperlink("TVP_Automation");
+        await homePage.waitFor(2000);
+        await companyListPage.verifyAddAnotherLink("Add another contract");
+        await homePage.waitFor(2000);
+        await companyListPage.nameInput("sample12","Contract Name*");
+        await companyListPage.descriptionAndOutboundPort("Sample Description", "Description");
+        await homePage.waitFor(2000);
+        await companyListPage.verifyDropdownSelectAll("Inbound VXML:","SELECT ALL");
+        await companyListPage.clickSomewhere("Name*");
+        await companyListPage.verifyDropdownSelectAll("Outbound Web:", "SELECT ALL");
+        await companyListPage.clickSomewhere("Name*");
+        await companyListPage.verifyDropdownSelectAll("Call Control:","SELECT ALL");
+        await companyListPage.clickSomewhere("Name*");
+        await companyListPage.nameInput("test","Contract Identifier*");
+        await companyListPage.descriptionAndOutboundPort("10", "Outbound Web Max Ports*");
+        await companyListPage.verifyDropdown("Speech Recognition","Web Services");
+        await companyListPage.verifyDropdown("Text to Speech","Web Services");
+        await companyListPage.verifyDropdown("Large Grammar","Web Services");
+        await companyListPage.verifyDropdown("Audio Synthesis","Web Services");
+        await companyListPage.verifyDropdown("Audio Transcoding","Web Services");
+        await companyListPage.verifyDropdown("Audio Buffering","Web Services");
+        await companyListPage.clickSomewhere("Name*");
+        await companyListPage.verifyDropdown("Enabled per TFN","Caller Verification");
+        await companyListPage.verifyDropdown("NextCaller","Vendor ID");
+        await homePage.waitFor(3000);
+        await companyListPage.verifyDropdownSelectAll("Country List for Outbound IVR Dialing*","SELECT ALL");
+        await companyListPage.clickSomewhere("Name*");
+        await companyListPage.nameInput("test@247.ai","Invoice Reviewers (E-mail)*");
+        await homePage.waitFor(1000);
+        await companyListPage.verifyButton("Save");
+        await homePage.waitFor(30000);
+    })
+
+    it('Navigate to admin >> Projects', async() =>{
+        await voiceLandingPage.clickMenu("Admin");
+        await homePage.waitFor(1000);
+        await voiceLandingPage.clickTab("Projects");
+        await homePage.waitFor(2000);
+    });
+
+    it('Add first project', async() => {
+        await usersPage.clickButton(locators.companyDropdown, '');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.companyMenu, 'TVP_Automation');
+        await homePage.waitFor(10000);
+        await adminProjectsPage.createAdminNewProject();
+        await homePage.waitFor(5000);
+        await adminProjectsPage.addProject("sample_project1");
+        await adminProjectsPage.waitFor(5000);
+        await adminProjectsPage.addProjectHeader("sample");
+        await adminProjectsPage.waitFor(3000);
+        await adminProjectsPage.addProjectSave();
+        await adminProjectsPage.waitFor(10000);
+    })
+
+    it('Add second project', async() => {
+        await adminProjectsPage.createAdminNewProject();
+        await homePage.waitFor(5000);
+        await adminProjectsPage.addProject("sample_project2");
+        await adminProjectsPage.waitFor(5000);
+        await adminProjectsPage.addProjectHeader("sample");
+        await adminProjectsPage.waitFor(3000);
+        await adminProjectsPage.addProjectSave();
+        await adminProjectsPage.waitFor(10000);
+    })
+
+    it('Add third project', async() => {
+        await adminProjectsPage.createAdminNewProject();
+        await homePage.waitFor(5000);
+        await adminProjectsPage.addProject("sample_project3");
+        await adminProjectsPage.waitFor(5000);
+        await adminProjectsPage.addProjectHeader("sample");
+        await adminProjectsPage.waitFor(3000);
+        await adminProjectsPage.addProjectSave();
+        await adminProjectsPage.waitFor(10000);
+    })
+
+    it('Navigate to Service >> WebServices', async() =>{
+        await voiceLandingPage.clickMenu("Services");
+        await homePage.waitFor(1000);
+        await voiceLandingPage.clickTab("Web Services");
+        await homePage.waitFor(2000);
+    });
+
+    it('Create speech web service account', async() => {
+        await usersPage.clickButton(locators.companyDropdown, '');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.companyMenu, 'TVP_Automation');
+        await homePage.waitFor(10000);
+        await serviceWebservicePage.createSpeechWebservice();
+        await serviceWebservicePage.waitFor(5000);
+        await serviceWebservicePage.createNewSpeechWebservice("speech1");
+        await usersPage.clickButton(locators.checkbox, "Speech Recognition");
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.checkbox, "Text to Speech");
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.checkbox, "Large Grammar");
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.checkbox, "Audio Synthesis");
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.checkbox, "Audio Transcoding");
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.checkbox, "Audio Buffering");
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.button, 'Save');
+        await usersPage.clickButton(locators.button, 'Yes');
+        await homePage.waitFor(10000);
+    })
+
+    it('Create reporting web service account', async()=>{
+        await serviceWebservicePage.createReportWebservice();
+        await serviceWebservicePage.waitFor(5000);
+        await serviceWebservicePage.createNewReportWebservice("report1");
+        await homePage.waitFor(2000);
+        await serviceWebservicePage.clickButton(locatorsWeb.projectDropdown, '');
+        await serviceWebservicePage.clickButton(locatorsWeb.projectsSelectAll, 'SELECT ALL');
+        await serviceWebservicePage.clickButton(locatorsWeb.projectDropdown, '');
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.checkbox, "Call Search");
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.checkbox, "Call Detail Records");
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.checkbox, "Client level");
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.checkbox, "Custom Reports");
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.checkbox, "Offline Reports");
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.checkbox, "Whole Call Recording");
+        await homePage.waitFor(2000);
+        await usersPage.clickButton(locators.button, 'Save');
+        await usersPage.clickButton(locators.button, 'Yes');
+        await homePage.waitFor(10000);
+    })
+
+    it('Navigate to Admin >> User Management', async() =>{
+        await voiceLandingPage.clickMenu("Admin");
+        await homePage.waitFor(5000);
+        await voiceLandingPage.clickTab("User Management");
+        await homePage.waitFor(10000);
+        await usersPage.clickButton(locators.companyDropdown, '');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.companyMenu, 'TVP_Automation');
+        await homePage.waitFor(10000);
+    });
+
+    it('Add a user with all projects as an adminstrator', async() => {
+        await usersPage.fillValue(locators.emailField, 'project_admin@tmail.com');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.projectDropdown, '');
+        await usersPage.clickButton(locators.projectsSelectAll, 'SELECT ALL');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.projectDropdown, '');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.permissionDropdown, '');
+        await usersPage.clickButton(locators.projectsMenu, 'Project Administrator');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.addButton, '');
+        await usersPage.waitUntilDisplayed(locators.message, 'successfully added project_admin@tmail.com').then(value => expect(value).toBe(true));
+        await homePage.waitFor(5000);
+    })
+
+    it('Add a company admin', async() => {
+        await usersPage.fillValue(locators.emailField, 'company_admin@tmail.com');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.permissionDropdown, '');
+        await usersPage.clickButton(locators.projectsMenu, 'Custom');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.addButton, '');
+        await homePage.waitFor(30000);
+        await usersPage.clickButton(locators.permissionCheckbox, 'Company Admin');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.button, 'SAVE');
+        await homePage.waitFor(10000);
+    })
+
+    it('Add a Superuser-Readonly', async() => {
+        await usersPage.fillValue(locators.emailField, 'super_userro@tmail.com');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.permissionDropdown, '');
+        await usersPage.clickButton(locators.projectsMenu, 'Custom');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.addButton, '');
+        await homePage.waitFor(30000);
+        await usersPage.clickButton(locators.permissionCheckbox, 'Superuser-Readonly');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.button, 'SAVE');
+        await homePage.waitFor(10000);
+    })
+
+    it('Add a Superuser', async() => {
+        await usersPage.fillValue(locators.emailField, 'super_user@tmail.com');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.permissionDropdown, '');
+        await usersPage.clickButton(locators.projectsMenu, 'Custom');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.addButton, '');
+        await homePage.waitFor(30000);
+        await usersPage.clickButton(locators.permissionCheckbox, 'Superuser');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.button, 'SAVE');
+        await homePage.waitFor(10000);
+    })
+
+    it('Add a PDB Admin', async() => {
+        await usersPage.fillValue(locators.emailField, 'pdb_admin@tmail.com');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.permissionDropdown, '');
+        await usersPage.clickButton(locators.projectsMenu, 'Custom');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.addButton, '');
+        await homePage.waitFor(30000);
+        await usersPage.clickButton(locators.permissionCheckbox, 'PDB');
+        await homePage.waitFor(5000);
+        await usersPage.clickButton(locators.button, 'SAVE');
+        await homePage.waitFor(10000);
+    })
+});

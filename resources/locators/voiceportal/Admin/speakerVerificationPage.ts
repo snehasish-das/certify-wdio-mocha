@@ -1,0 +1,16 @@
+module.exports = {
+    label: "//div[@class='label' and contains(text(), '<<param>>')]",
+    companyDropdown: "//div[@data-qa = 'dropDownControl']",
+    companyMenu: "//div[@class='company-container']//div[@role='menu']//div[@role='menuitem' and @data-qa='<<param>>']",
+    contractDropdown: "//div[@class='label' and contains(text(), 'Contract')]//following::div[contains(@class, 'control')]//div[contains(@class, 'Indicators')]",
+    contractMenu: "//div[contains(@class, 'menu')]//div[text()='<<param>>']",
+    spveCheckbox: "//input[@aria-label = 'switch']",
+    toggleStatus: "//p[contains(@id, 'Enable')]",
+    hyperlink: "//a[contains(text(), '<<param>>')]",
+    button: "//button[contains(text(), '<<param>>')]",
+    dropdown: "//div[contains(text(), '<<param>>')]//following::select",
+    dropdownMenu: "//option[contains(text(), '<<param>>')]",
+    message: "//td[contains(text(), '<<param>>')]",
+    appInput: "//input[@id='app_input']",
+    appCheckbox: "//input[contains(@value, '<<param>>')]",
+}

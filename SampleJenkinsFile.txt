@@ -1,0 +1,47 @@
+pipeline {
+  agent {
+        docker {
+            image 'nexus.cicd.sv2.247-inc.net:5000/247nodejs-build-centos7:14.16.1_npm_v6_jenkins_oss'
+            label 'build_sv2'
+        }
+  }
+  stages {
+		stage('Checkout Certify') {
+		  steps {
+			git(url: 'https://github.home.247-inc.net/Quality/certify.git', credentialsId: 'sv2_githubtocken')
+		  }
+		}
+		stage('Trigger Tests') {
+		  steps {   
+				timeout(45) {
+							wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 0, installationName: 'Xvfb', 	parallelBuild: true, screen: '1024x758x24', timeout: 25]) {
+								sh '''#!/bin/bash
+									export http_proxy=http://proxy-grp1.lb-priv.sv2.247-inc.net:3128
+									export https_proxy=http://proxy-grp1.lb-priv.sv2.247-inc.net:3128
+									npm cache clean --force
+									npm install 
+									HOME_URL=$HOME npx wdio wdio.conf.ts --suite carddesigner'''
+							  }
+							}
+				}
+		}
+  }
+  post {
+    always {
+      script {
+            allure([
+                    includeProperties: false,
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'target/allure-results']]
+            ])
+        }
+    }
+
+  }
+  options {
+    buildDiscarder(logRotator(daysToKeepStr: '30', numToKeepStr: '5'))
+  }
+  parameters {
+    string(name: 'HOME', defaultValue: null, description: null)
+  }
+}

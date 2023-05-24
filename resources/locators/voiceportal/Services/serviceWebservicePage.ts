@@ -1,0 +1,23 @@
+module.exports={
+    svgIcon: "//div[@class='css-0']//*[name()='svg']",
+    WebserviceClient: "//div[normalize-space()='TVP_Automation']",
+    link: "//a[normalize-space()='<<param>>']",
+    RequiredFieldsSW: "//div[normalize-space()='<<param>>']",
+    nameField: "//div[contains(text(), 'Account Name')]//following::input",
+    SubmitSW: "//button[@name='cap-text']",
+    SaveSW: "//button[@name='tfs-dialog-ok-key']",
+    VerifyCreatedSW: "//a[normalize-space()='<<param>>']",
+    DiscriptionOfSW: "//div[contains(text(), 'Description')]//following::input",
+    EditSaveAndDeploy: "//button[normalize-space()='Save & Deploy']",
+    DeleteSW: "//button[normalize-space()='Delete Account']",
+    RequiredFieldWebservice: "//div[contains(text(),'<<param>>')]",
+    RWProjectsvg: "//div[@class=' css-17cpwma-indicatorContainer']//*[name()='svg']",
+    projectDropdown: "//div[contains(text(), 'Project')]//following::div[contains(@class, 'control')]/div[contains(@class, 'Indicator')]",
+    projectsMenu: "//div[contains(@class, 'css-t2mbhx-menu')]//div[text()='<<param>>']",
+    projectsSelectAll: "//div[contains(@class, 'css-t2mbhx-menu')]//span[text()='<<param>>']",
+    SubmitRW: "//button[normalize-space()='Yes']",
+    VerifyCreatedRW: "//a[normalize-space()='<<param>>']",
+    DeleteRW: "//button[normalize-space()='Delete Account']",
+    SaveRW: "//button[normalize-space()='Yes']",
+    checkbox: "//span[contains(normalize-space(), '<<param>>')]//parent::label//*[name()='rect']"
+}
