@@ -5,8 +5,8 @@ require('global-agent/bootstrap')
 const fs = require('fs');  //fs module to read json file
 const path = require('path'); //path for screenshot file save
 const supertest = require('supertest');
-const request = supertest('http://dev-cache01.scs.dev.east.cloud.247-inc.net/attest/api');
-const request_jira = supertest('https://247inc.atlassian.net/rest/api');  // JIRA url
+const request = process.env.TCM_API_BASE_URL ? supertest(process.env.TCM_API_BASE_URL) : undefined;
+const request_jira = process.env.JIRA_API_BASE_URL ? supertest(process.env.JIRA_API_BASE_URL) : undefined;
 const FormData = require('form-data');
 const fetch = require('node-fetch');
 
@@ -142,10 +142,6 @@ export const config: Options.Testrunner = {
         //
         browserName: 'chrome',
         acceptInsecureCerts: true,
-        // proxy: {
-        //     proxyType: "manual",
-        //     httpProxy: "http://proxy-grp1.lb-priv.sv2.247-inc.net:3128"
-        // }
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
         // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
@@ -182,7 +178,6 @@ export const config: Options.Testrunner = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    //baseUrl: 'http://staging.developer.247-inc.net/home',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 120000,
@@ -370,12 +365,12 @@ export const config: Options.Testrunner = {
         }
 
         //Report back to TCM tool
-        if (process.env.BUILD_NUMBER != null) {
+        if (process.env.BUILD_NUMBER != null && request != null && request_jira != null) {
             let nodeName = process.env.NODE_NAME;
             let testID = test.title.split(',')[0].split('=')[1];
             let endpoint = '/releases/' + nodeName + '/' + testID;
-            let auth = 'Basic c25laGFzaXNoLmRhc0AyNDcuYWk6V2VsY29tZTEyMyQ=';
-            let link = "https://cicd.cloud.247-inc.net/job/certify-test-framework/job/TCM_Adhoc_Test_Run/" + process.env.BUILD_NUMBER;
+            let auth = process.env.TCM_AUTHORIZATION || '';
+            let link = (process.env.TCM_JOB_URL || '') + process.env.BUILD_NUMBER;
             let testStatus = passed ? "Passed" : "Failed";
             let payload = '{ "test_status": "' + testStatus + '","test_run_link": "' + link + '"}';
             console.log("Node: " + nodeName + ", Test ID: " + testID + ", Endpoint: " + endpoint + ", payload: " + payload);
@@ -386,7 +381,7 @@ export const config: Options.Testrunner = {
                 //Getting the required details for Bug Description
                 let envUrl = process.env.HOME;
                 console.log("envi URL-->", +envUrl);
-                let jobLink = "https://cicd.cloud.247-inc.net/job/certify-test-framework/job/TCM_Adhoc_Test_Run/";
+                let jobLink = process.env.TCM_JOB_URL || '';
                 let testTitle = test.title.split(',')[1].split('=')[1];
                 let productName = test.title.split(',')[2].split('=')[1];
                 let jsonData = JSON.parse(fs.readFileSync('JiraApiPayload.json', 'utf-8'));
@@ -407,9 +402,8 @@ export const config: Options.Testrunner = {
                 }
                 //Forming JIRA Api for Defect Creation
                 let jiraendpoint = '/3/issue';
-                let jiraauth = 'Basic c293amFueWEuckAyNDcuYWk6QVRBVFQzeEZmR0Ywb2xZZGFoVkU2WGZuZmdYMjVZT2Rsb25NVmJlTkx2QXplc2hJQ2hCc1htd3dCdVRKQnBmZUFZTVUtSVJzNWkxLXNFcXF6R1piQm5XZm1QY0pLdi1HSm9aZmxNNWtpRzZNZUhGc3lGeEN5NkJabGdlNjBwdEZOMTZyazd3RGFqMW1PR21PU0J6NWZ0TXd2TWlMWFd2OTFUOERnX2J0cDRCSUZ6cmNWZ240Ym1VPTZCQzQ0ODU3';
-                //let cookie = 'atlassian.xsrf.token=BFJ5-99LY-C2ZS-U889_30c11cf1616c494a84324c3e12927a28b3f8fe2d_lin';
-                let cookie = 'atlassian.xsrf.token=BFJ5-99LY-C2ZS-U889_356dc135bf83ccf55701bee345fd5b56ca094044_lin';
+                let jiraauth = process.env.JIRA_AUTHORIZATION || '';
+                let cookie = process.env.JIRA_COOKIE || '';
                 console.log("Complete Payload Value -->", jsonData);
                 //Sending POST request to creat Defect
                 let jiraresponse = await request_jira.post(jiraendpoint).set('Content-Type', 'application/json').set('Authorization', jiraauth).set('Cookie', cookie).send(jsonData);
@@ -430,7 +424,7 @@ export const config: Options.Testrunner = {
 
                 form.append('file', fileStream, { knownLength: fileSizeInBytes });
 
-                fetch('https://247inc.atlassian.net/rest/api/3/issue/' + BugIdvalue + '/attachments',
+                fetch((process.env.JIRA_ATTACHMENT_API_BASE_URL || '') + '/issue/' + BugIdvalue + '/attachments',
                     {
                         method: 'POST',
                         body: form,

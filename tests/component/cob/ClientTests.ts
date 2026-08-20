@@ -39,6 +39,6 @@ describe('COB Clients tests', async() => {
         await createClientPage.update("cob/updateClient.ts");
     });
     it('Verify assist console url for new client', async() => {
-        await homePage.navigateTo("https://"+clientName+".portal.assist.staging.247-inc.net/en/console");
+            await homePage.navigateTo((process.env.ASSIST_CONSOLE_TEMPLATE || "").replace("{client}", clientName));
     });
 });

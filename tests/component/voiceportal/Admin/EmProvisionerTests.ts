@@ -174,7 +174,7 @@ describe('Voice Portal Admin -> EM Provisioner Tests', async() => {
     })
     it('Verify if Save Button is disbled when the ‘Name’ field is Empty', async() =>{
         await EmProvisionerPage.inputField("testing","Description:");
-        await EmProvisionerPage.inputField("https://247-inc.okta.com/","Application URL:");
+        await EmProvisionerPage.inputField(process.env.OKTA_APPLICATION_URL || "","Application URL:");
         await EmProvisionerPage.inputField("12","Access Control List*:");
         await homePage.waitFor(2000);
         await EmProvisionerPage.verifyButton("Save").then(value => expect(value).toBe(false));
