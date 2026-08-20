@@ -40,7 +40,7 @@
         "priority": {
             "id": "3",
             "name": "P3 (Medium)",
-            "iconUrl": "https://247inc.atlassian.net/images/icons/priorities/medium.svg"
+            "iconUrl": ""
         },
         "assignee": {
             "id": ""

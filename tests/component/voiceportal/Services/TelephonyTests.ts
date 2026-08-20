@@ -13,7 +13,7 @@ describe('Voice Portal Services -> Telephony Tests', async() => {
       await homePage.waitFor(5000);
       await voiceLandingPage.clickMenu("Services");
       await homePage.waitFor(5000);
-      expect(await telephonePage.getUrl()).toEqual("https://dev-voices-sjc02.home.247-inc.net/services/telephony");
+      expect(await telephonePage.getUrl()).toEqual((process.env.VOICE_HOME || "") + "/services/telephony");
   });
 
   it('Select client from dropdown', async() =>{
